@@ -1,4 +1,3 @@
-
 import 'package:provider_templet/src/net/result_data.dart';
 import 'package:provider_templet/src/manager/storage_manager.dart';
 
@@ -22,7 +21,7 @@ abstract class ListViewModel<R> extends CommonViewModel {
 
   Future<ResultData<R>> load(
       {bool defaultSet = true, bool setState = true}) async {
-    ResultData<R> resultData = await fetchList<R>(prepare, setState: setState, adapter: jsonMapperAdapter());
+    ResultData<R> resultData = await fetchList<R>(prepare, setState: setState);
     if (resultData.success) {
       if (defaultSet) {
         list = resultData.list ?? [];

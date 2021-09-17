@@ -27,8 +27,7 @@ abstract class ObjViewModel<R> extends CommonViewModel {
   void onFetchFail(ResultData res) {}
 
   Future<ResultData<R>> load() async {
-    ResultData<R> resultData =
-        await fetchResult<R>(prepare, adapter: jsonMapperAdapter());
+    ResultData<R> resultData = await fetchResult<R>(prepare);
     if (resultData.success) {
       data = resultData.data;
       if (localKey != null) {

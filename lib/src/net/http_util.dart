@@ -3,16 +3,12 @@ import 'package:dio/dio.dart';
 import 'package:provider_templet/src/net/result_data.dart';
 
 class HttpUtils {
-
   static Future<ResultData<T>> fetchResult<T>(Future<Response> Function() fetch,
       {Function(T? data)? successCallback,
-      Function(int statusCode, String errorMessage)? errorCallback,
-      IJsonMapperAdapter? adapter,
-      int? priority}) async {
+      Function(int statusCode, String errorMessage)? errorCallback}) async {
     try {
       Response result = await fetch();
-      ResultData<T> dataResult = ResultData<T>.fromJson(result.data,
-          adapter: adapter, priority: priority);
+      ResultData<T> dataResult = ResultData<T>.fromJson(result.data);
       if (successCallback != null) {
         successCallback(dataResult.data);
       }
@@ -24,9 +20,7 @@ class HttpUtils {
 
   static Future<ResultData<T>> fetchList<T>(Future<Response> Function() fetch,
       {Function(List<T>? data)? successCallback,
-      Function(int statusCode, String errorMessage)? errorCallback,
-      IJsonMapperAdapter? adapter,
-      int? priority}) async {
+      Function(int statusCode, String errorMessage)? errorCallback}) async {
     try {
       Response result = await fetch();
       ResultData<T> dataResult = ResultData<T>.fromJson(result.data);

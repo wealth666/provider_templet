@@ -15,7 +15,7 @@ class HttpStateViewModel with ChangeNotifier {
 
   HttpStateViewModel({ViewState? viewState})
       : _viewState = viewState ?? ViewState.idle {
-    debugPrint('ViewStateModel---constructor--->$runtimeType');
+    debugPrint('[ViewStateModel] constructor: $runtimeType');
   }
 
   ViewState get viewState => _viewState;
@@ -35,18 +35,22 @@ class HttpStateViewModel with ChangeNotifier {
 
   void setIdle() {
     viewState = ViewState.idle;
+    super.notifyListeners();
   }
 
   void setBusy() {
     viewState = ViewState.busy;
+    super.notifyListeners();
   }
 
   void setEmpty() {
     viewState = ViewState.empty;
+    super.notifyListeners();
   }
 
   void setError() {
     viewState = ViewState.error;
+    super.notifyListeners();
   }
 
   Future<ResultData<T>> fetchResult<T>(Future<Response> Function() fetch,
@@ -96,7 +100,7 @@ class HttpStateViewModel with ChangeNotifier {
   @override
   void dispose() {
     _disposed = true;
-    debugPrint('view_state_model dispose -->$runtimeType');
+    debugPrint('[ViewStateModel] dispose: $runtimeType');
     super.dispose();
   }
 }

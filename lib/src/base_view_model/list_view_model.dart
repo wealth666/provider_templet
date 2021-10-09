@@ -23,6 +23,9 @@ abstract class ListViewModel<R> extends CommonViewModel {
       {bool defaultSet = true, bool setState = true}) async {
     ResultData<R> resultData = await fetchList<R>(prepare, setState: setState);
     if (resultData.success) {
+      if (resultData.list == null || resultData.list!.isEmpty) {
+        setEmpty();
+      }
       if (defaultSet) {
         list = resultData.list ?? [];
         if (localKey != null) {

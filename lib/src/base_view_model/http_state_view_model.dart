@@ -35,22 +35,18 @@ class HttpStateViewModel with ChangeNotifier {
 
   void setIdle() {
     viewState = ViewState.idle;
-    super.notifyListeners();
   }
 
   void setBusy() {
     viewState = ViewState.busy;
-    super.notifyListeners();
   }
 
   void setEmpty() {
     viewState = ViewState.empty;
-    super.notifyListeners();
   }
 
   void setError() {
     viewState = ViewState.error;
-    super.notifyListeners();
   }
 
   Future<ResultData<T>> fetchResult<T>(Future<Response> Function() fetch,
@@ -72,7 +68,7 @@ class HttpStateViewModel with ChangeNotifier {
   }
 
   Future<ResultData<T>> fetchList<T>(Future<Response> Function() fetch,
-      {bool setState = true,
+      {bool setState = false,
       IJsonMapperAdapter? adapter,
       int? priority}) async {
     if (setState) {

@@ -1,8 +1,10 @@
 library provider_templet;
 
 export 'src/base_view_model/http_param_view_model.dart';
+export 'src/base_view_model/http_load_state_view_model.dart';
 export 'src/base_view_model/list_view_model.dart';
 export 'src/base_view_model/list_index_view_model.dart';
+export 'src/base_view_model/http_state_view_model.dart';
 export 'src/base_view_model/obj_view_model.dart';
 export 'src/base_view_model/list_view_model.dart';
 export 'src/base_view_model/submit_view_model.dart';

@@ -1,9 +1,8 @@
+import 'package:provider_templet/src/base_view_model/http_load_state_view_model.dart';
 import 'package:provider_templet/src/net/result_data.dart';
 import 'package:provider_templet/src/manager/storage_manager.dart';
 
-import 'common_view_model.dart';
-
-abstract class ListViewModel<R> extends CommonViewModel {
+abstract class ListViewModel<R> extends HttpLoadStateViewModel {
   // 返回值
   List<R> list = [];
 
@@ -19,6 +18,12 @@ abstract class ListViewModel<R> extends CommonViewModel {
 
   void onFetchFail(ResultData res) {}
 
+  @override
+  Future<ResultData<R>> refresh() {
+    return load(setState: false);
+  }
+
+  @override
   Future<ResultData<R>> load(
       {bool defaultSet = true, bool setState = true}) async {
     ResultData<R> resultData = await fetchList<R>(prepare, setState: setState);

@@ -8,7 +8,12 @@ class ResultData<T> {
   late List<T>? list;
   late bool success;
 
-  ResultData({code, message, success});
+  ResultData(
+      {required this.code,
+      required this.message,
+      required this.success,
+      this.list,
+      this.data});
 
   ResultData.fromJson(Map<String, dynamic> json,
       {IJsonMapperAdapter? adapter, int? priority}) {

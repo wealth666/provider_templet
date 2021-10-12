@@ -18,14 +18,21 @@ abstract class RefreshViewModel<R> extends ListViewModel<R> {
 
   RefreshController get refreshController => _refreshController;
 
-  Future<ResultData> loadData() async {
-    return refresh(init: true);
+  @override
+  Future<ResultData<R>> load(
+      {bool defaultSet = true, bool setState = true}) async {
+    return pullRefresh(init: true);
   }
 
-  Future<ResultData> refresh({bool init = false}) async {
+  @override
+  Future<ResultData<R>> refresh() async {
+    return pullRefresh(init: false);
+  }
+
+  Future<ResultData<R>> pullRefresh({bool init = false}) async {
     _currentPageNum = pageNumFirst;
     refreshController.resetNoData();
-    ResultData<R> res = await load(defaultSet: false, setState: init);
+    ResultData<R> res = await super.load(defaultSet: false, setState: init);
     if (res.success) {
       if (res.list!.isEmpty) {
         refreshController.refreshCompleted(resetFooterState: true);

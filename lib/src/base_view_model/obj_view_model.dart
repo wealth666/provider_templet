@@ -1,9 +1,8 @@
+import 'package:provider_templet/src/base_view_model/http_load_state_view_model.dart';
+import 'package:provider_templet/src/manager/storage_manager.dart';
 import 'package:provider_templet/src/net/result_data.dart';
-import '../manager/storage_manager.dart';
 
-import 'common_view_model.dart';
-
-abstract class ObjViewModel<R> extends CommonViewModel {
+abstract class ObjViewModel<R> extends HttpLoadStateViewModel {
   // 返回值
   late R? _data;
 
@@ -26,12 +25,22 @@ abstract class ObjViewModel<R> extends CommonViewModel {
 
   void onFetchFail(ResultData res) {}
 
-  Future<ResultData<R>> load() async {
-    ResultData<R> resultData = await fetchResult<R>(prepare);
+  @override
+  Future<ResultData<R>> refresh() {
+    return load(setState: false);
+  }
+
+  @override
+  Future<ResultData<R>> load(
+      {bool defaultSet = true, bool setState = true}) async {
+    ResultData<R> resultData =
+        await fetchResult<R>(prepare, setState: setState);
     if (resultData.success) {
-      data = resultData.data;
-      if (localKey != null) {
-        StorageManager.setItem(localKey!, data);
+      if (defaultSet) {
+        data = resultData.data;
+        if (localKey != null) {
+          StorageManager.setItem(localKey!, data);
+        }
       }
       onFetchSuccess(data);
     } else {

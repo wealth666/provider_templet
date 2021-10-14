@@ -4,13 +4,13 @@ import 'package:provider_templet/src/net/result_data.dart';
 
 abstract class ObjViewModel<R> extends HttpLoadStateViewModel {
   // 返回值
-  late R _data;
+  late R? _data;
 
   String? localKey;
 
   ObjViewModel() {
     if (localKey != null) {
-      _data = StorageManager.getItem<R>(localKey!) ?? null;
+      _data = StorageManager.getItem<R>(localKey!);
     }
   }
 
@@ -19,7 +19,7 @@ abstract class ObjViewModel<R> extends HttpLoadStateViewModel {
     notifyListeners();
   }
 
-  R get data => _data;
+  R get data => _data!;
 
   void onFetchSuccess(R data) {}
 

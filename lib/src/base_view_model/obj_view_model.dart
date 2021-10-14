@@ -4,24 +4,24 @@ import 'package:provider_templet/src/net/result_data.dart';
 
 abstract class ObjViewModel<R> extends HttpLoadStateViewModel {
   // 返回值
-  late R? _data;
+  late R _data;
 
   String? localKey;
 
   ObjViewModel() {
     if (localKey != null) {
-      _data = StorageManager.getItem<R>(localKey!);
+      _data = StorageManager.getItem<R>(localKey!) ?? null;
     }
   }
 
-  set data(R? data) {
+  set data(R data) {
     _data = data;
     notifyListeners();
   }
 
-  R? get data => _data;
+  R get data => _data;
 
-  void onFetchSuccess(R? data) {}
+  void onFetchSuccess(R data) {}
 
   void onFetchFail(ResultData res) {}
 
@@ -34,10 +34,10 @@ abstract class ObjViewModel<R> extends HttpLoadStateViewModel {
   Future<ResultData<R>> load(
       {bool defaultSet = true, bool setState = true}) async {
     ResultData<R> resultData =
-        await fetchResult<R>(prepare, setState: setState);
+    await fetchResult<R>(prepare, setState: setState);
     if (resultData.success) {
       if (defaultSet) {
-        data = resultData.data;
+        data = resultData.data!;
         if (localKey != null) {
           StorageManager.setItem(localKey!, data);
         }

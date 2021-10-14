@@ -10,11 +10,13 @@ abstract class RefreshViewModel<R> extends ListViewModel<R> {
   /// 分页条目数量
   int pageSize = 30;
 
+  bool enablePullUp = false;
+
   /// 当前页码
   int _currentPageNum = pageNumFirst;
 
   final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController(initialRefresh: false);
 
   RefreshController get refreshController => _refreshController;
 
@@ -30,6 +32,7 @@ abstract class RefreshViewModel<R> extends ListViewModel<R> {
   }
 
   Future<ResultData<R>> pullRefresh({bool init = false}) async {
+    enablePullUp = false;
     _currentPageNum = pageNumFirst;
     refreshController.resetNoData();
     ResultData<R> res = await super.load(defaultSet: false, setState: init);
@@ -44,6 +47,7 @@ abstract class RefreshViewModel<R> extends ListViewModel<R> {
         // 小于分页的数量,禁止上拉加载更多
         if (res.list!.length < pageSize) {
         } else {
+          enablePullUp = true;
           // 防止上次上拉加载更多失败,需要重置状态
           refreshController.loadComplete();
         }
@@ -61,7 +65,7 @@ abstract class RefreshViewModel<R> extends ListViewModel<R> {
   /// 上拉加载更多
   Future<ResultData> loadMore() async {
     ++_currentPageNum;
-    ResultData<R> res = await load(defaultSet: false, setState: false);
+    ResultData<R> res = await super.load(defaultSet: false, setState: false);
     if (res.success) {
       if (res.list!.isEmpty) {
         _currentPageNum--;

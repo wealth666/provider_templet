@@ -57,9 +57,7 @@ class HttpStateViewModel with ChangeNotifier {
       setBusy();
     }
     return HttpUtils.fetchResult<T>(() => fetch(), successCallback: (T? data) {
-      if (setState) {
-        setIdle();
-      }
+      setIdle();
     }, errorCallback: (int code, String message) {
       if (setState) {
         setError();
@@ -76,9 +74,7 @@ class HttpStateViewModel with ChangeNotifier {
     }
     return HttpUtils.fetchList<T>(() => fetch(),
         successCallback: (List<T>? data) {
-      if (setState) {
-        setIdle();
-      }
+      setIdle();
     }, errorCallback: (int code, String message) {
       if (setState) {
         setError();

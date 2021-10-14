@@ -25,8 +25,8 @@ abstract class RefreshViewModel<R> extends ListViewModel<R> {
   }
 
   @override
-  Future<ResultData<R>> refresh() async {
-    return pullRefresh(init: false);
+  Future<ResultData<R>> refresh({bool setState = false}) async {
+    return pullRefresh(init: setState);
   }
 
   Future<ResultData<R>> pullRefresh({bool init = false}) async {

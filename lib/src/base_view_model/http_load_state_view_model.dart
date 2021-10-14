@@ -6,5 +6,5 @@ abstract class HttpLoadStateViewModel<R> extends CommonViewModel {
   Future<ResultData<R>> load({bool defaultSet, bool setState});
 
   // 刷新数据
-  Future<ResultData<R>> refresh();
+  Future<ResultData<R>> refresh({bool setState});
 }

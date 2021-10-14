@@ -19,8 +19,8 @@ abstract class ListViewModel<R> extends HttpLoadStateViewModel {
   void onFetchFail(ResultData res) {}
 
   @override
-  Future<ResultData<R>> refresh() {
-    return load(setState: false);
+  Future<ResultData<R>> refresh({bool setState = false}) {
+    return load(setState: setState);
   }
 
   @override

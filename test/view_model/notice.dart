@@ -21,7 +21,7 @@ class NoticeList extends ListViewModel<NoticeModel> {
 
 class NoticeDetail extends ObjViewModel<NoticeModel>
     with HttpParamViewModel<NoticeRequest> {
-  String get url => '/app/user/notice/${params.noticeID}';
+  String get url => '/app/user/notice/${params?.noticeID}';
 
   @override
   Future<Response<Map>> prepare() => dio.get<Map>(url);

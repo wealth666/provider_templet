@@ -42,6 +42,11 @@ class HttpUtils {
       ResultData<T> result = ResultData<T>.fromError(e.response?.data ?? {});
       message = result.message;
       errorCode = result.code;
+
+      if (errorCallback != null) {
+        errorCallback(errorCode, message);
+      }
+
       if (e.response?.statusCode == 400) {
         return result;
       } else if (e.response?.statusCode == 401) {

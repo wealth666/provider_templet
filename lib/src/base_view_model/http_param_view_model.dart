@@ -6,9 +6,9 @@ abstract class HttpParamViewModel<P> {
   notifyListeners();
 
   // 请求参数
-  late P _params;
+  P? _params;
 
-  set params(P params) {
+  set params(P? params) {
     _params = params;
     notifyListeners();
   }
@@ -18,11 +18,11 @@ abstract class HttpParamViewModel<P> {
     return this;
   }
 
-  P get params => _params;
+  P? get params => _params;
 
   set copyParams(P params) {
     if (_params != null) {
-      _params = MyJsonMapping.copyWith(_params, params)!;
+      _params = MyJsonMapping.copyWith(_params!, params)!;
     } else {
       _params = params;
     }

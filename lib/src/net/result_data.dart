@@ -3,10 +3,10 @@ import 'package:dart_json_mapper/dart_json_mapper.dart';
 @jsonSerializable
 class ResultData<T> {
   int code = 0;
-  late String message;
+  String message = '';
+  bool success = true;
   late T? data;
   late List<T>? list;
-  late bool success;
 
   ResultData(
       {required this.code,

@@ -6,14 +6,13 @@ class ResultData<T> {
   String message = '';
   bool success = true;
   late T? data;
-  late List<T>? list;
+  late List<T>? list = [];
 
-  ResultData(
-      {required this.code,
-      required this.message,
-      required this.success,
-      this.list,
-      this.data});
+  ResultData({required this.code,
+    required this.message,
+    required this.success,
+    this.list,
+    this.data});
 
   ResultData.fromJson(Map<String, dynamic> json,
       {IJsonMapperAdapter? adapter, int? priority}) {

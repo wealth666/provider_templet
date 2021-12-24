@@ -4,7 +4,7 @@ import 'package:provider_templet/src/net/result_data.dart';
 
 abstract class ObjViewModel<R> extends HttpLoadStateViewModel {
   // 返回值
-  late R? _data;
+  R? _data;
 
   String? localKey;
 

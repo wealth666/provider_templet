@@ -14,14 +14,14 @@ abstract class ObjViewModel<R> extends HttpLoadStateViewModel {
     }
   }
 
-  set data(R data) {
+  set data(R? data) {
     _data = data;
     notifyListeners();
   }
 
-  R get data => _data!;
+  R? get data => _data;
 
-  void onFetchSuccess(R data) {}
+  void onFetchSuccess(R? data) {}
 
   void onFetchFail(ResultData res) {}
 

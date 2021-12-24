@@ -8,9 +8,10 @@ class ResultData<T> {
   late T? data;
   late List<T>? list = [];
 
-  ResultData({required this.code,
-    required this.message,
+  ResultData({
     required this.success,
+    this.code = 0,
+    this.message = '',
     this.list,
     this.data});
 

@@ -1,69 +1,56 @@
 import 'package:dart_json_mapper/dart_json_mapper.dart';
+import 'package:provider_templet/provider_templet.dart';
+import 'package:provider_templet/src/widget/provider_templet.dart';
 
 @jsonSerializable
 class ResultData<T> {
   int code = 0;
   String message = '';
   bool success = true;
-  late T? data;
-  late List<T>? list = [];
+  T? data;
+  List<T>? list = [];
 
-  ResultData({
-    required this.success,
-    this.code = 0,
-    this.message = '',
-    this.list,
-    this.data});
+  ResultData(
+      {required this.success,
+      this.code = 0,
+      this.message = '',
+      this.list,
+      this.data});
 
   ResultData.fromJson(Map<String, dynamic> json,
       {IJsonMapperAdapter? adapter, int? priority}) {
-    code = json['errorCode'];
-    message = json['errorMessage'];
-    data = getObjectData(json['payload']);
-    list = getListData(json['payload']);
-    success = json['success'];
+    ResponseData resData = ProviderTemplet.config.transformResData(json);
+    code = resData.errorCode;
+    message = resData.message;
+    data = HttpUtils.getObjectData(resData.payload);
+    list = HttpUtils.getListData(resData.payload);
+    success = resData.success;
   }
 
   ResultData.fromError(Map<String, dynamic> json) {
-    code = json['errorCode'];
-    message = json['errorMessage'];
-    data = json['payload'];
-    success = json['success'];
-  }
-
-  T? getObjectData(dynamic data) {
-    if (data is List) {
-      return null;
-    }
-    if (data is Map) {
-      try {
-        return JsonMapper.deserialize(data);
-      } catch (e) {
-        // ignore: avoid_print
-        print(e);
-      }
-    } else {
-      return data;
-    }
-  }
-
-  List<T> getListData(dynamic data) {
-    if (data is List) {
-      return data.map((item) {
-        try {
-          return JsonMapper.deserialize<T>(item)!;
-        } catch (e) {
-          // ignore: avoid_print
-          print(e);
-        }
-        return {} as T;
-      }).toList();
-    }
-    return [];
+    ResponseData resData = ProviderTemplet.config.transformResData(json);
+    code = resData.errorCode;
+    message = resData.message;
+    data = resData.payload;
+    success = resData.success;
   }
 
   @override
   String toString() {
     return JsonMapper.serialize(this);
   }
+}
+
+class ResponseData {
+  int errorCode;
+  String message;
+  bool success;
+  dynamic payload;
+
+  ResponseData({
+    required this.errorCode,
+    required this.message,
+    required this.success,
+    required this.payload,
+  });
 }

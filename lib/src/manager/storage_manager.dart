@@ -7,8 +7,12 @@ class StorageManager {
   /// 初始化必备操作 eg:user数据
   static late SharedPreferences prefs;
 
-  static Future<bool> setItem<T>(String key, T data) {
-    return prefs.setString(key, JsonMapper.serialize(data));
+  static Future<bool> setItem<T>(String key, T? data) {
+    if (data != null) {
+      return prefs.setString(key, JsonMapper.serialize(data));
+    } else {
+      return delItem(key);
+    }
   }
 
   static T? getItem<T>(String key) {
@@ -23,7 +27,9 @@ class StorageManager {
   static List<T> getList<T>(String key) {
     String? value = prefs.getString(key);
     return value != null
-        ? jsonDecode(value).map<T>((item) => JsonMapper.deserialize<T>(item)).toList()
+        ? jsonDecode(value)
+        .map<T>((item) => JsonMapper.deserialize<T>(item))
+        .toList()
         : [];
   }
 

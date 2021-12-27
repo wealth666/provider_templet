@@ -17,6 +17,9 @@ abstract class ObjViewModel<R> extends HttpLoadStateViewModel {
   set data(R? data) {
     _data = data;
     notifyListeners();
+    if (localKey != null) {
+      StorageManager.setItem(localKey!, data);
+    }
   }
 
   R? get data => _data;
@@ -37,10 +40,7 @@ abstract class ObjViewModel<R> extends HttpLoadStateViewModel {
     await fetchResult<R>(prepare, setState: setState);
     if (resultData.success) {
       if (defaultSet) {
-        data = resultData.data!;
-        if (localKey != null) {
-          StorageManager.setItem(localKey!, data);
-        }
+        data = resultData.data;
       }
       onFetchSuccess(data);
     } else {

@@ -10,6 +10,7 @@ export 'src/base_view_model/list_view_model.dart';
 export 'src/base_view_model/submit_view_model.dart';
 export 'src/base_view_model/refresh_view_model.dart';
 export 'src/base_view_model/local_list_index_model.dart';
+export 'src/base_view_model/index_view_model.dart';
 
 export 'src/base_view_model/model/view_state.dart';
 

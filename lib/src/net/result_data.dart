@@ -4,8 +4,8 @@ import 'package:provider_templet/src/widget/provider_templet.dart';
 
 @jsonSerializable
 class ResultData<T> {
-  int code = 0;
-  String message = '';
+  int? code;
+  String? message;
   bool success = true;
   T? data;
   List<T>? list = [];
@@ -42,8 +42,8 @@ class ResultData<T> {
 }
 
 class ResponseData {
-  int errorCode;
-  String message;
+  int? errorCode;
+  String? message;
   bool success;
   dynamic payload;
 

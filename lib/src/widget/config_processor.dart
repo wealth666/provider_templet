@@ -7,7 +7,7 @@ abstract class ConfigProcessor {
   ResponseData transformResData(Map<String, dynamic> json);
 
   ResultData<T> handleResError<T>(e, stackTrace,
-      {Function(int statusCode, String errorMessage)? errorCallback});
+      {Function(int statusCode, String? errorMessage)? errorCallback});
 
   void handleError(Response response, ResultData? result);
 
@@ -19,10 +19,10 @@ abstract class ConfigProcessor {
 class BaseConfigProcessor extends ConfigProcessor {
   @override
   ResponseData transformResData(Map<String, dynamic> json) {
-    int errorCode = json['errorCode'];
-    String errorMessage = json['errorMessage'];
+    int? errorCode = json['errorCode'];
+    String? errorMessage = json['errorMessage'];
     dynamic payload = json['payload'];
-    bool success = json['success'];
+    bool success = json['success'] ?? false;
 
     return ResponseData(
       errorCode: errorCode,
@@ -37,9 +37,9 @@ class BaseConfigProcessor extends ConfigProcessor {
 
   @override
   ResultData<T> handleResError<T>(e, stackTrace,
-      {Function(int statusCode, String errorMessage)? errorCallback}) {
+      {Function(int statusCode, String? errorMessage)? errorCallback}) {
     int? errorCode;
-    String message = ProviderTemplet.config.systemErrorMessage();
+    String? message = ProviderTemplet.config.systemErrorMessage();
     debugPrint(stackTrace.toString());
     ResultData<T>? result;
     if (e is DioError && e.response != null) {

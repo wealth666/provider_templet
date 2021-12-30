@@ -28,7 +28,7 @@ class StorageManager {
     String? value = prefs.getString(key);
     return value != null
         ? jsonDecode(value)
-        .map<T>((item) => JsonMapper.deserialize<T>(item))
+        .map<T>((item) => JsonMapper.deserialize<T>(item)!)
         .toList()
         : [];
   }

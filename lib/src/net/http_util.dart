@@ -6,7 +6,7 @@ import 'package:provider_templet/src/widget/provider_templet.dart';
 class HttpUtils {
   static Future<ResultData<T>> fetchResult<T>(Future<Response> Function() fetch,
       {Function(T? data)? successCallback,
-      Function(int statusCode, String errorMessage)? errorCallback}) async {
+      Function(int statusCode, String? errorMessage)? errorCallback}) async {
     try {
       Response result = await fetch();
       ResultData<T> dataResult = ResultData<T>.fromJson(result.data);
@@ -21,7 +21,7 @@ class HttpUtils {
 
   static Future<ResultData<T>> fetchList<T>(Future<Response> Function() fetch,
       {Function(List<T>? data)? successCallback,
-      Function(int statusCode, String errorMessage)? errorCallback}) async {
+      Function(int statusCode, String? errorMessage)? errorCallback}) async {
     try {
       Response result = await fetch();
       ResultData<T> dataResult = ResultData<T>.fromJson(result.data);
@@ -51,16 +51,19 @@ class HttpUtils {
   }
 
   static List<T> getListData<T>(dynamic data) {
-    if (data is List) {
-      return data.map((item) {
-        try {
-          return JsonMapper.deserialize<T>(item)!;
-        } catch (e) {
-          // ignore: avoid_print
-          print(e);
-        }
-        return {} as T;
-      }).toList();
+    if(data!=null){
+      if (data is List) {
+        return data.map((item) {
+          try {
+            return JsonMapper.deserialize<T>(item)!;
+          } catch (e) {
+            print(item);
+            // ignore: avoid_print
+            print(e);
+          }
+          return {} as T;
+        }).toList();
+      }
     }
     return [];
   }

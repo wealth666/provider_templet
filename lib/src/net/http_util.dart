@@ -43,6 +43,8 @@ class HttpUtils {
         return JsonMapper.deserialize(data);
       } catch (e) {
         // ignore: avoid_print
+        print(data);
+        // ignore: avoid_print
         print(e);
       }
     } else {
@@ -57,6 +59,7 @@ class HttpUtils {
           try {
             return JsonMapper.deserialize<T>(item)!;
           } catch (e) {
+            // ignore: avoid_print
             print(item);
             // ignore: avoid_print
             print(e);
